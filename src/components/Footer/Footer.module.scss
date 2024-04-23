@@ -1,0 +1,52 @@
+@import '../../styles/variables';
+
+.wrapper {
+  background-color: var(--background-color);
+
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: 0 auto;
+
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  justify-content: space-between;
+  a {
+    color: white;
+    padding: 8px 0;
+  }
+}
+
+.title {
+  font-size: 28px;
+  color: white;
+  height: 44px;
+
+  margin-bottom: 50px;
+  padding: 0;
+  h1 {
+    color: white;
+  }
+}
+
+.imgGroup {
+  display: flex;
+  flex-direction: row;
+  //justify-content: center;
+  gap: 20px;
+  align-items: center;
+  img {
+    width: 34px;
+  }
+}
