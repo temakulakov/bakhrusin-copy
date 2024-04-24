@@ -18,7 +18,7 @@ const Panel = ({element, setElement}: Props) => {
         return <motion.div
             key={element.id}
             initial={{opacity: 0, y: -10, height: '5%'}}
-            animate={{opacity: 1, y: -10, height: 'fit-content', justifyContent: 'center'}}
+            animate={{opacity: 1, y: -13, height: 'fit-content', justifyContent: 'center'}}
             exit={{opacity: 0, y: -10, height: '5%'}}
             className={styles.wrapper} onMouseLeave={() => {
             setElement(undefined)

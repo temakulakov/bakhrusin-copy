@@ -28,7 +28,8 @@ const Panel = ({ panel }: Props) => {
         }
     }, [panel]);
     return <AnimatePresence>
-        {panel && <motion.div className={styles.wrapper}
+        {panel && <motion.div
+            className={styles.wrapper}
                     initial={{opacity: 0, y: 17, width: '95%'}}
                     animate={{opacity: 1, y: 25, width: '100%'}}
                     exit={{opacity: 0, y: 17, width: '95%'}}

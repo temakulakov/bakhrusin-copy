@@ -52,7 +52,13 @@ const Header = () => {
     }, [selectedMenu])
 
     return <>
-        <motion.header onMouseEnter={() => {setHover(true)}} onMouseLeave={() => setHover(false)} transition={{ type: "just", stiffness: 100 }}  animate={{ y: scrollDirection || scrollY < 400 ? '0' : '-100%', background: hover ? 'rgba(138, 22, 53, 0.69)' :  'linear-gradient(180deg, rgba(0,0,0,0.671327906162465) 0%, rgba(0,0,0,0.5816920518207283) 60%, rgba(0,212,255,0) 100%);' }} initial={{ y: '0' }} className={styles.wrapper}>
+        <motion.header
+            onMouseEnter={() => {setHover(true)}}
+            onMouseLeave={() => setHover(false)}
+            transition={{ type: "just", stiffness: 100 }}
+            animate={{ y: scrollDirection || scrollY < 400 ? '0' : '-100%',  }}
+            initial={{ y: '0' }}
+            className={styles.wrapper}>
             <div className={styles.top}>
                 <Link to={'/'} className={styles.logo}>
                     <img src={BMLogoLeft} alt="BMLogoLeft"/>
