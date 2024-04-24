@@ -39,8 +39,11 @@
   height: fit-content;
   font-size: 19px;
   padding: 10px 30px;
-  a {
+  //padding-bottom: 0;
+  > a {
     color: white;
+    flex-grow: 1;
+    text-align: center;
   }
 }
 
@@ -50,6 +53,7 @@
   padding: 10px 30px;
 
   align-items: center;
+  padding-bottom: 0;
 }
 
 .logo {
@@ -90,12 +94,16 @@
     }
     &:hover {
       background-color: white;
+      //background-color: #9D2135;
       color: black;
+      //color: white;
     }
   }
   .ticket {
     background-color: #E8D096;
+    //background-color: #9D2135;
     color: black;
+    //color: white;
     border: none;
   }
 

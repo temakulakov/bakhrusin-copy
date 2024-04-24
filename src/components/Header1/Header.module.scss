@@ -29,13 +29,15 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+
 }
 
 .item {
   color: white;
   padding: 10px 0;
   cursor: pointer;
-
+  flex-grow: 1;
+  text-align: center;
   border-radius: 5px 5px 0 0;
 
   transition: background-color 0.3s;

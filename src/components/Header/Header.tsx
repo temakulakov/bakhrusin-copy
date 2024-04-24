@@ -21,13 +21,12 @@ import BMText from './assets/BMText.svg';
 import eye from './assets/eye.svg';
 import search from './assets/search.svg';
 import account from './assets/account.svg';
-import {motion} from "framer-motion";
+import {AnimatePresence, motion, useAnimation} from "framer-motion";
 
 const Header = () => {
 
-    const visitorsData = useRecoilValue(visitors);
-    const [selectedMenu, setSelectedMenu] = useState<IArticle | undefined>(undefined)
-    const [lastDown, setLastDown] = useState<number>(0)
+    const { scrollY, scrollDirection } = useScrollDirection();
+    const [ hover, setHover ] = useState(false);
 
     const exibitionsAndEventsData = useRecoilValue(exibitionsAndEvents);
     const yourdelfData = useRecoilValue(yourself);
@@ -36,6 +35,15 @@ const Header = () => {
     const onlineData = useRecoilValue(online);
     const proData = useRecoilValue(pro);
     const supportData = useRecoilValue(support);
+    const visitorsData = useRecoilValue(visitors);
+    const [selectedMenu, setSelectedMenu] = useState<IArticle | undefined>(undefined)
+    const [lastDown, setLastDown] = useState<number>(0)
+
+
+    useEffect(() => {
+        console.log(scrollDirection);
+        console.log(scrollY);
+    }, [scrollY, scrollDirection]);
 
     useEffect(() => {
         if (selectedMenu === undefined) {
@@ -44,7 +52,7 @@ const Header = () => {
     }, [selectedMenu])
 
     return <>
-        <header className={styles.wrapper}>
+        <motion.header onMouseEnter={() => {setHover(true)}} onMouseLeave={() => setHover(false)} transition={{ type: "just", stiffness: 100 }}  animate={{ y: scrollDirection || scrollY < 400 ? '0' : '-100%', background: hover ? 'rgba(138, 22, 53, 0.69)' :  'linear-gradient(180deg, rgba(0,0,0,0.671327906162465) 0%, rgba(0,0,0,0.5816920518207283) 60%, rgba(0,212,255,0) 100%);' }} initial={{ y: '0' }} className={styles.wrapper}>
             <div className={styles.top}>
                 <Link to={'/'} className={styles.logo}>
                     <img src={BMLogoLeft} alt="BMLogoLeft"/>
@@ -70,7 +78,7 @@ const Header = () => {
                 {visitorsData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 1 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 1 ? '#EEEEEF' : '',
                     color: lastDown === 1 ? 'black' : 'white',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
@@ -81,7 +89,7 @@ const Header = () => {
                     style={{
                         transition: 'all .3s ease',
                         borderRadius: '3px 3px 0 0',
-                        backgroundColor: lastDown === 2 ? '#fafafa' : '',
+                        backgroundColor: lastDown === 2 ? '#EEEEEF' : '',
                         color: lastDown === 2 ? 'black' : 'white',
 
                         padding: '4px 20px'
@@ -93,7 +101,7 @@ const Header = () => {
                 {yourdelfData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 3 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 3 ? '#EEEEEF' : '',
                     color: lastDown === 3 ? 'black' : 'white',
 
                     padding: '4px 20px'
@@ -104,7 +112,7 @@ const Header = () => {
                 {childrenData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 4 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 4 ? '#EEEEEF' : '',
                     color: lastDown === 4 ? 'black' : 'white',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
@@ -113,7 +121,9 @@ const Header = () => {
                 }} to={childrenData.link}>{childrenData.title}</Link>}
                 {labData && <Link style={{
                     transition: 'all .3s ease',
-                    borderRadius: '3px 3px 0 0',
+                    backgroundColor: lastDown === 5 ? '#EEEEEF' : '',
+                    color: lastDown === 5 ? 'black' : 'white',
+                    borderRadius: '3px',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
                     setSelectedMenu(labData);
@@ -122,7 +132,7 @@ const Header = () => {
                 {onlineData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 6 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 6 ? '#EEEEEF' : '',
                     color: lastDown === 6 ? 'black' : 'white',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
@@ -132,7 +142,7 @@ const Header = () => {
                 {proData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 7 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 7 ? '#EEEEEF' : '',
                     color: lastDown === 7 ? 'black' : 'white',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
@@ -142,7 +152,7 @@ const Header = () => {
                 {supportData && <Link style={{
                     transition: 'all .3s ease',
                     borderRadius: '3px 3px 0 0',
-                    backgroundColor: lastDown === 8 ? '#fafafa' : '',
+                    backgroundColor: lastDown === 8 ? '#EEEEEF' : '',
                     color: lastDown === 8 ? 'black' : 'white',
                     padding: '4px 20px'
                 }} onMouseEnter={() => {
@@ -150,21 +160,58 @@ const Header = () => {
                     setLastDown(8);
                 }} to={supportData.link}>{supportData.title}</Link>}
 
-                {
-                    selectedMenu && selectedMenu.menu && <Panel element={selectedMenu} setElement={setSelectedMenu}/>
-                }
+                <AnimatePresence>
+                    {
+                        selectedMenu && selectedMenu.menu && <Panel element={selectedMenu} setElement={setSelectedMenu}/>
+                    }
+                </AnimatePresence>
             </div>
-        </header>
-        {
-            selectedMenu && selectedMenu.menu && <motion.div initial={{opacity: 0}} animate={{opacity: 1}} style={{
-                background: 'rgba(0,0,0,0.53)',
-                height: '5900px',
-                width: '100vw',
-                position: 'absolute',
-                zIndex: 1
-            }}/>}
+        </motion.header>
+        <AnimatePresence>
+            {
+                selectedMenu && selectedMenu.menu && <motion.div key={selectedMenu.id} initial={{opacity: 0}} exit={{opacity: 0}} animate={{opacity: 1}} style={{
+                    background: 'rgba(0,0,0,0.53)',
+                    height: '5900px',
+                    width: '100vw',
+                    position: 'absolute',
+                    zIndex: 1
+                }}/>}
+        </AnimatePresence>
 
     </>
 };
+
+const useScrollDirection = () => {
+    const [lastScrollTop, setLastScrollTop] = useState(0);
+    const [scrollDirection, setScrollDirection] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            setScrollPosition(currentScrollY);
+
+            // Определяем направление скролла
+            if (currentScrollY > lastScrollTop) {
+                setScrollDirection(false);
+            } else if (currentScrollY < lastScrollTop) {
+                setScrollDirection(true);
+            }
+            setLastScrollTop(currentScrollY); // Обновляем последнее значение скролла
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollTop]);
+
+    return {
+        scrollY: scrollPosition,  // текущее положение скролла
+        scrollDirection          // направление скролла: 'up' или 'down'
+    };
+};
+
 
 export default Header;
